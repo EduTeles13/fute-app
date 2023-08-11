@@ -12,5 +12,5 @@ Acessos:
   - Guilherme Ribeiro (grcc) - Gerente do projeto *Líder
   - Luca Neves (lnb2) - Líder tećnico
   - Breno Alexandre Santos (baas) - Desenvolvedor
-  - Eduardo Teles () - Desenvolvedor e designer
+  - Eduardo Teles (edot) - Desenvolvedor e designer
   - Josef Jaeger () - Desenvolvedor
