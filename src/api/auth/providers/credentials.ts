@@ -27,11 +27,10 @@ export const credentialsProvider = CredentialsProvider({
   authorize: async (credentials) => {
     if (credentials?.identifier) {
       try {
-        const body = {
-          username: credentials.identifier,
-          password: credentials.password,
-        };
-
+        // const body = {
+        //   username: credentials.identifier,
+        //   password: credentials.password,
+        // };
         //const loginResponse: LoginResponse = await axios.unauthorized().post('auth/login', body);
 
         const loginResponse: LoginResponse = {
