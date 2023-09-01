@@ -1,12 +1,12 @@
 import { ResponsiveBox } from '@/components/ResponsiveBox';
-import { Login } from '@/modules/public/Login';
+import { Futes } from '@/modules/public/Futes';
 
-const LoginScreen = () => {
+const FutesScreen = () => {
   return (
     <ResponsiveBox>
-      <Login />
+      <Futes />
     </ResponsiveBox>
   );
 };
 
-export default LoginScreen;
+export default FutesScreen;

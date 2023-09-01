@@ -1,7 +1,5 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import axios from '@/lib/axios';
-
 export type LoginResponse = {
   id: string;
   access_token: string;
@@ -34,7 +32,23 @@ export const credentialsProvider = CredentialsProvider({
           password: credentials.password,
         };
 
-        const loginResponse: LoginResponse = await axios.unauthorized().post('auth/login', body);
+        //const loginResponse: LoginResponse = await axios.unauthorized().post('auth/login', body);
+
+        const loginResponse: LoginResponse = {
+          access_token: '123',
+          id: '12345678',
+          user: {
+            version: 1,
+            username: 'teste',
+            exp: 7 * 24 * 60 * 60,
+            iat: 7 * 24 * 60 * 60,
+            id: '12345678',
+            refresh_token: {
+              eat: '',
+              id: '12345678',
+            },
+          },
+        };
 
         if (!loginResponse.access_token)
           throw new Error('Ocorreu um erro. Tente novamente mais tarde.');
