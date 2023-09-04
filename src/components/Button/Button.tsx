@@ -1,11 +1,11 @@
-import { Button } from '@chakra-ui/react';
-type ButtonProps = {
+import { Button, ButtonProps } from '@chakra-ui/react';
+type ButtonProperties = {
   label: string;
-};
+} & ButtonProps;
 
-export const ButtonComponent = ({ label }: ButtonProps) => {
+export const ButtonComponent = ({ label, ...rest }: ButtonProperties) => {
   return (
-    <Button colorScheme="green" borderRadius="4px" size="lg">
+    <Button bgColor="primary.100" color="white" borderRadius="md" size="lg" {...rest}>
       {label}
     </Button>
   );
