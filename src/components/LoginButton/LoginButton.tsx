@@ -1,26 +1,22 @@
-// components/LoginButton.tsx
-
 import { Button, ButtonProps } from '@chakra-ui/react';
 
 interface LoginButtonProps extends ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void; // Adicionamos uma prop onClick
+  label: string;
+  onClick?: () => void;
 }
 
-const LoginButton: React.FC<LoginButtonProps> = ({ children, onClick, ...rest }) => {
+export const LoginButton: React.FC<LoginButtonProps> = ({ label, onClick, ...rest }) => {
   return (
     <Button
       colorScheme="white"
       variant="outline"
-      borderColor="green.500"
-      color="green.500"
+      borderColor="primary.100"
+      color="primary.100"
       _hover={{ bg: 'green.500', color: 'white' }}
-      onClick={onClick} // Chama a função onClick quando o botão é clicado
+      onClick={onClick}
       {...rest}
     >
-      {children}
+      {label}
     </Button>
   );
 };
-
-export default LoginButton;
