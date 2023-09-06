@@ -32,11 +32,11 @@ export const Login = () => {
         alignItems="left"
         marginLeft="2rem"
       >
-        <TextInput label="E-mail" placeholder="Digite seu e-mail" borderRadius="md" width="22rem" />
+        <TextInput label="E-mail" placeholder="Digite seu e-mail" borderRadius="md" width="21rem" />
 
-        <TextInput label="Senha" placeholder="Digite a sua senha" borderRadius="md" width="22rem" />
+        <TextInput label="Senha" placeholder="Digite a sua senha" borderRadius="md" width="21rem" />
 
-        <LoginButton label="Entrar" borderRadius="md" width="5rem" marginLeft="8.5rem" />
+        <LoginButton label="Entrar" borderRadius="md" width="5rem" marginLeft="7.75rem" />
 
         <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/futes" />
       </Flex>
