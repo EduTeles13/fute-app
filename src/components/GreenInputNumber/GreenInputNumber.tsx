@@ -6,10 +6,17 @@ import {
   NumberDecrementStepper,
 } from '@chakra-ui/react';
 
-export const GreenInputNumber = () => {
+export const GreenInputNumber = ({ ...rest }) => {
   return (
-    <NumberInput defaultValue={20} min={0} max={20}>
-      <NumberInputField />
+    <NumberInput defaultValue={20} min={0} max={40} {...rest}>
+      <NumberInputField
+        height="2rem"
+        width="100%"
+        borderRadius="sm"
+        borderColor="primary.100"
+        borderWidth="0.15rem"
+        style={{ boxSizing: 'border-box' }}
+      />
       <NumberInputStepper>
         <NumberIncrementStepper />
         <NumberDecrementStepper />
