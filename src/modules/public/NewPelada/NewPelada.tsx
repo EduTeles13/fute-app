@@ -35,10 +35,10 @@ export const NewPelada = () => {
         <CloseButton marginTop="0.75rem" marginRight="0.75rem" size="lg" />
       </Flex>
       <Box marginLeft="1rem" marginTop="5rem">
-        <GreenTextBox label="Nome do jogador" />
+        <GreenTextBox label="Nome do jogador" type="text" />
       </Box>
       <Box marginLeft="1rem">
-        <GreenTextBox label="Estrela do jogador" />
+        <GreenTextBox label="Estrela do jogador" type="text" />
       </Box>
       <Flex flexDir="row">
         <Flex alignContent="row" justifyContent="space-between" gap="0.75rem">
