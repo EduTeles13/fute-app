@@ -11,7 +11,6 @@ export const GreenInputNumber = ({ ...rest }) => {
     <NumberInput defaultValue={20} min={0} max={40} {...rest}>
       <NumberInputField
         height="2rem"
-        width="100%"
         borderRadius="sm"
         borderColor="primary.100"
         borderWidth="0.15rem"
