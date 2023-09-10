@@ -1,4 +1,4 @@
-import { Flex, Box, Heading, useToast } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, useToast, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { getSession, signIn } from 'next-auth/react';
 
@@ -33,45 +33,30 @@ export const Login = () => {
   };
 
   return (
-    <>
-      <Flex marginTop="3.75rem">
-        <Box>
+    <Flex flexDir="column" alignItems="center" gap="3rem" marginTop="2rem">
+      <Grid templateColumns="repeat(4, 1fr)" w="100%">
+        <GridItem colSpan={1}>
           <ReturnButton />
-        </Box>
-        <Flex
-          w="100%"
-          h="100hv"
-          alignItems="center"
-          justifyContent="center"
-          flexDir="column"
-          color="black"
-          paddingRight="5rem"
-        >
-          <Heading fontSize="xl">Login</Heading>
-        </Flex>
-      </Flex>
-      <Flex
-        marginTop="9rem"
-        flexDir="column"
-        justifyContent="space-between"
-        gap="2rem"
-        alignItems="left"
-        marginLeft="2rem"
-      >
-        <TextInput label="E-mail" placeholder="Digite seu e-mail" borderRadius="md" width="22rem" />
-
-        <TextInput label="Senha" placeholder="Digite a sua senha" borderRadius="md" width="22rem" />
-
+        </GridItem>
+        <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
+          <Text fontWeight="bold" fontSize="lg">
+            Login
+          </Text>
+        </GridItem>
+        <GridItem />
+      </Grid>
+      <Flex flexDir="column" w="100%" justifyContent="center" gap="1rem">
+        <TextInput label="E-mail" placeholder="Digite seu e-mail" borderRadius="md" />
+        <TextInput label="Senha" placeholder="Digite a sua senha" borderRadius="md" />
         <LoginButton
           label="Entrar"
           borderRadius="md"
           width="5rem"
-          marginLeft="8.5rem"
           onClick={handleLogin}
+          alignSelf="flex-end"
         />
-
-        <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/futes" />
       </Flex>
-    </>
+      <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/futes" />
+    </Flex>
   );
 };
