@@ -2,9 +2,10 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import { GreenTextBox } from '@/components/GreenTextBox';
+import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 
-export const Register = () => {
+export const Register3 = () => {
   return (
     <Flex
       flexDir="column"
@@ -36,6 +37,16 @@ export const Register = () => {
         <Box>
           <GreenTextBox type="password" label="Confirmar senha" />
         </Box>
+      </Flex>
+      <Flex justifyContent="flex-end">
+        <LoginButton
+          label="Próximo"
+          borderRadius="md"
+          height="2.1rem"
+          width="5.5rem"
+          marginTop="1.2rem"
+          marginLeft="15.3rem"
+        />
       </Flex>
     </Flex>
   );
