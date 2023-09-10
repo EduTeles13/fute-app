@@ -1,11 +1,11 @@
 import { Input, InputProps, Flex, Text } from '@chakra-ui/react';
 import React, { ForwardRefRenderFunction, forwardRef } from 'react';
-type GreenTextBoxProps = {
+type InputTextFieldProps = {
   label: string;
   errorMessage?: string;
 } & InputProps;
 
-const GreenTextBoxBase: ForwardRefRenderFunction<HTMLInputElement, GreenTextBoxProps> = (
+const InputTextFieldBase: ForwardRefRenderFunction<HTMLInputElement, InputTextFieldProps> = (
   { label, errorMessage, ...rest },
   ref,
 ) => {
@@ -16,7 +16,6 @@ const GreenTextBoxBase: ForwardRefRenderFunction<HTMLInputElement, GreenTextBoxP
         ref={ref}
         height="2rem"
         borderRadius="sm"
-        borderColor="primary.100"
         borderWidth="0.15rem"
         _hover={{ borderColor: 'gray.400' }}
         _focus={{ borderColor: 'blue.400' }}
@@ -31,4 +30,4 @@ const GreenTextBoxBase: ForwardRefRenderFunction<HTMLInputElement, GreenTextBoxP
   );
 };
 
-export const GreenTextBox = forwardRef(GreenTextBoxBase);
+export const InputTextField = forwardRef(InputTextFieldBase);

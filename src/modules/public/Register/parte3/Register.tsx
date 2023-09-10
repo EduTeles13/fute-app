@@ -1,9 +1,10 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
-import { GreenTextBox } from '@/components/GreenTextBox';
 import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
+
+import { InputTextField } from '@/components/InputTextField';
 
 export const Register3 = () => {
   return (
@@ -26,16 +27,16 @@ export const Register3 = () => {
       </Flex>
       <Flex flexDir="column" justifyContent="space-between" gap="2rem" alignItems="center">
         <Box>
-          <GreenTextBox type="text" label="E-mail" />
+          <InputTextField type="text" label="E-mail" />
         </Box>
         <Box>
-          <GreenTextBox type="text" label="Nome da pelada" />
+          <InputTextField type="text" label="Nome da pelada" />
         </Box>
         <Box>
-          <GreenTextBox type="password" label="Senha" />
+          <InputTextField type="password" label="Senha" />
         </Box>
         <Box>
-          <GreenTextBox type="password" label="Confirmar senha" />
+          <InputTextField type="password" label="Confirmar senha" />
         </Box>
       </Flex>
       <Flex justifyContent="flex-end">

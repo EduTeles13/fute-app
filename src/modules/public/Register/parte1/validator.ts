@@ -13,5 +13,5 @@ export const validator = yup.object().shape({
   confirmPassword: yup
     .string()
     .required('A confirmação de senha é obrigatória')
-    .oneOf([yup.ref('senha')], 'A confirmação de senha deve ser igual à senha'),
+    .oneOf([yup.ref('password')], 'A confirmação de senha deve ser igual à senha'),
 });

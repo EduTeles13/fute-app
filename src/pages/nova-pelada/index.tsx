@@ -1,10 +1,10 @@
 import { ResponsiveBox } from '@/components';
-import { NewPelada } from '@/modules/public/NewPelada';
+import { NewFute } from '@/modules/public/NewFute';
 
 const AddPelada = () => {
   return (
-    <ResponsiveBox>
-      <NewPelada />
+    <ResponsiveBox display="flex" justifyContent="center" h="100vh">
+      <NewFute />
     </ResponsiveBox>
   );
 };

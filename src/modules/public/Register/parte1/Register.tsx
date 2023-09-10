@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { GreenTextBox } from '@/components/GreenTextBox';
+import { InputTextField } from '@/components/InputTextField';
 import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 
@@ -43,25 +43,25 @@ export const Register1 = () => {
         <GridItem />
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="1rem" px="1rem">
-        <GreenTextBox
+        <InputTextField
           errorMessage={errors?.email?.message}
           type="text"
           label="E-mail"
           {...register('email')}
         />
-        <GreenTextBox
+        <InputTextField
           errorMessage={errors?.peladaName?.message}
           type="text"
           label="Nome da pelada"
           {...register('peladaName')}
         />
-        <GreenTextBox
+        <InputTextField
           errorMessage={errors?.password?.message}
           type="password"
           label="Senha"
           {...register('password')}
         />
-        <GreenTextBox
+        <InputTextField
           errorMessage={errors?.confirmPassword?.message}
           type="password"
           label="Confirmar senha"

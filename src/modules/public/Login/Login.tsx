@@ -1,22 +1,40 @@
 import { Flex, Grid, GridItem, useToast, Text } from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { getSession, signIn } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
 
 import { ClickableText } from '@/components/ClickableText/ClickableText';
+import { InputTextField } from '@/components/InputTextField';
 import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
-import { TextInput } from '@/components/TextInput';
 import { cookies } from '@/utils';
+
+import { validator } from './utils/validator';
+
+type LoginFormType = {
+  username: string;
+  password: string;
+};
 
 export const Login = () => {
   const { push } = useRouter();
   const toast = useToast();
 
-  const handleLogin = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormType>({
+    mode: 'onChange',
+    resolver: yupResolver(validator),
+  });
+
+  const handleLogin = async ({ username, password }: LoginFormType) => {
     const result = await signIn('credentials', {
       redirect: false,
-      identifier: 'teste@gmail.com',
-      password: '12345678',
+      identifier: username,
+      password,
     });
     if (result?.status == 200) {
       const session: any = await getSession();
@@ -33,7 +51,14 @@ export const Login = () => {
   };
 
   return (
-    <Flex flexDir="column" alignItems="center" gap="3rem" marginTop="2rem">
+    <Flex
+      as="form"
+      onSubmit={handleSubmit(handleLogin)}
+      flexDir="column"
+      alignItems="center"
+      gap="3rem"
+      marginTop="2rem"
+    >
       <Grid templateColumns="repeat(4, 1fr)" w="100%">
         <GridItem colSpan={1}>
           <ReturnButton />
@@ -46,17 +71,29 @@ export const Login = () => {
         <GridItem />
       </Grid>
       <Flex flexDir="column" w="100%" justifyContent="center" gap="1rem">
-        <TextInput label="E-mail" placeholder="Digite seu e-mail" borderRadius="md" />
-        <TextInput label="Senha" placeholder="Digite a sua senha" borderRadius="md" />
+        <InputTextField
+          label="Nome de usuário"
+          placeholder="Digite seu nome"
+          borderRadius="md"
+          errorMessage={errors?.username?.message}
+          {...register('username')}
+        />
+        <InputTextField
+          label="Senha"
+          placeholder="Digite a sua senha"
+          borderRadius="md"
+          errorMessage={errors?.password?.message}
+          {...register('password')}
+        />
         <LoginButton
+          type="submit"
           label="Entrar"
           borderRadius="md"
           width="5rem"
-          onClick={handleLogin}
           alignSelf="flex-end"
         />
       </Flex>
-      <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/futes" />
+      <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/cadastrar" />
     </Flex>
   );
 };

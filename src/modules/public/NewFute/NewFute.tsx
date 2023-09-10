@@ -1,7 +1,6 @@
 import {
   Heading,
   Flex,
-  Box,
   Text,
   Switch,
   CloseButton,
@@ -13,39 +12,37 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-import { GreenTextBox } from '@/components/GreenTextBox';
+import { InputTextField } from '@/components/InputTextField';
 import { LoginButton } from '@/components/LoginButton';
 
-export const NewPelada = () => {
+export const NewFute = () => {
   return (
     <Flex
+      w="100%"
       flexDir="column"
       justifyContent="space-between"
       gap="2rem"
-      border="1px solid black"
+      border="1px solid"
+      borderColor="gray.100"
       borderRadius="md"
-      paddingBottom="5rem"
       shadow="xl"
-      marginTop="7rem"
+      p="1.5rem"
+      my="auto"
     >
       <Flex flexDir="row" justifyContent="space-between" gap="2rem">
-        <Heading marginTop="1rem" marginLeft="1.5rem" fontSize="xl" as="b">
+        <Heading marginTop="1rem" fontSize="xl" as="b">
           Novo Jogador
         </Heading>
         <CloseButton marginTop="0.75rem" marginRight="0.75rem" size="lg" />
       </Flex>
-      <Box marginLeft="1rem" marginTop="5rem">
-        <GreenTextBox label="Nome do jogador" type="text" />
-      </Box>
-      <Box marginLeft="1rem">
-        <GreenTextBox label="Estrela do jogador" type="text" />
-      </Box>
-      <Flex flexDir="row">
+
+      <InputTextField label="Nome do jogador" type="text" />
+
+      <InputTextField label="Estrela do jogador" type="text" />
+
+      <Flex flexDir="row" justifyContent="space-between">
         <Flex alignContent="row" justifyContent="space-between" gap="0.75rem">
-          <Text marginTop="0.5rem" marginLeft="2rem">
-            Mensalista
-          </Text>
-          {/* <InformationBox message="Mensalista é o jogador que paga um valor mensal, e tem prioridade na lista para jogar" /> */}
+          <Text marginTop="0.5rem">Mensalista</Text>
           <Popover>
             <PopoverTrigger>
               <Button fontSize="sm" fontStyle="italic">
@@ -60,14 +57,15 @@ export const NewPelada = () => {
             </PopoverContent>
           </Popover>
         </Flex>
-        <Switch colorScheme="green" size="lg" marginLeft="8rem" marginTop="0.5rem" />
+        <Switch colorScheme="green" size="lg" marginTop="0.5rem" />
       </Flex>
+
       <LoginButton
         label="Criar"
         borderRadius="md"
         width="5rem"
-        marginLeft="17rem"
         marginTop="5rem"
+        alignSelf="flex-end"
       />
     </Flex>
   );
