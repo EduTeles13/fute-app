@@ -31,4 +31,3 @@ export const Register2 = () => {
     </Flex>
   );
 };
-ya
