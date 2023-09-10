@@ -3,13 +3,13 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 export type LoginResponse = {
   id: string;
   access_token: string;
+  name: string;
   user: User;
 };
 
 export type User = {
   version: number;
   id: string;
-  username: string;
   refresh_token: {
     id: string;
     eat: string;
@@ -37,9 +37,9 @@ export const credentialsProvider = CredentialsProvider({
           access_token:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXJzaW9uIjoxLCJ1c2VybmFtZSI6InRlc3RlQGdtYWlsLmNvbSIsImV4cCI6NjA0ODAwLCJpYXQiOjYwNDgwMCwiaWQiOiIxMjM0NTY3OCIsInJlZnJlc2hfdG9rZW4iOnsiZWF0IjoiMTIzNDU2NzgiLCJpZCI6IjEyMzQ1Njc4In19.QFgDnzRdziAkBov1cNeBDCvZ-I-s1pMNsY3Grdag6q4',
           id: '12345678',
+          name: 'pelada_da_urna',
           user: {
             version: 1,
-            username: 'teste@gmail.com',
             exp: 7 * 24 * 60 * 60,
             iat: 7 * 24 * 60 * 60,
             id: '12345678',
