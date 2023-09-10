@@ -39,7 +39,8 @@ export const Login = () => {
     if (result?.status == 200) {
       const session: any = await getSession();
       cookies.setAccess(session?.user.access_token);
-      await push('/admin');
+      const footyUsername = session.user?.name;
+      await push(`/admin/${footyUsername}`);
     } else {
       toast({
         title: 'Usuário ou senha incorreta.',
@@ -80,6 +81,7 @@ export const Login = () => {
         />
         <InputTextField
           label="Senha"
+          type="password"
           placeholder="Digite a sua senha"
           borderRadius="md"
           errorMessage={errors?.password?.message}

@@ -1,12 +1,11 @@
 import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { Home, UserCog } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import React from 'react';
 
 import { Navigation } from '@/components/Navigation';
 
-import { FootyEventList } from './components/FootyEventList';
-
-export const HomeFooty = () => {
+export const Profile = () => {
   const { data } = useSession();
   const username = data?.user?.name;
 
@@ -17,12 +16,11 @@ export const HomeFooty = () => {
           <GridItem colSpan={1} />
           <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
             <Text fontWeight="bold" fontSize="lg">
-              Pelada da Urna
+              Configurações
             </Text>
           </GridItem>
           <GridItem />
         </Grid>
-        <FootyEventList />
       </Flex>
       <Navigation
         routes={[

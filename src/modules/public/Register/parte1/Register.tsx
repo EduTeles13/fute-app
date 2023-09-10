@@ -25,10 +25,11 @@ export const Register1 = () => {
     mode: 'onChange',
     resolver: yupResolver(validator),
   });
-  console.log(errors);
+
   const submitRegister = (data: RegisterFormType) => {
     console.log(data);
   };
+
   return (
     <Flex flexDir="column" gap="3rem" mt="2rem" as="form" onSubmit={handleSubmit(submitRegister)}>
       <Grid templateColumns="repeat(4, 1fr)">
