@@ -1,18 +1,18 @@
-import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Text, GridItem, Grid } from '@chakra-ui/react';
 import React from 'react';
 
 import { ReturnButton } from '@/components/ReturnButton';
 
-export const FootyEvent = () => {
+export const PlayersSetup = () => {
   return (
     <Flex flexDir="column" gap="3rem" mt="2rem">
-      <Grid templateColumns="repeat(5, 1fr)">
+      <Grid templateColumns="repeat(4, 1fr)">
         <GridItem colSpan={1}>
           <ReturnButton />
         </GridItem>
-        <GridItem colSpan={3} display="flex" alignItems="center" justifyContent="center">
+        <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
           <Text fontWeight="bold" fontSize="lg">
-            Pelada
+            Cadastro de Pelada
           </Text>
         </GridItem>
         <GridItem />

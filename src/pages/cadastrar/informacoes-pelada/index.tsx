@@ -1,10 +1,10 @@
 import { ResponsiveBox } from '@/components/ResponsiveBox';
-import { Register1 } from '@/modules/public/Register/parte1';
+import { FootyInfo } from '@/modules/public/Register/FootyInfo';
 
 export default function Home() {
   return (
     <ResponsiveBox>
-      <Register1 />
+      <FootyInfo />
     </ResponsiveBox>
   );
 }

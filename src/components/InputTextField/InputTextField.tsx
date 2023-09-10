@@ -17,8 +17,7 @@ const InputTextFieldBase: ForwardRefRenderFunction<HTMLInputElement, InputTextFi
         height="2rem"
         borderRadius="sm"
         borderWidth="0.15rem"
-        _hover={{ borderColor: 'gray.400' }}
-        _focus={{ borderColor: 'blue.400' }}
+        _focus={{ borderColor: 'primary.100' }}
         {...rest}
       />
       {errorMessage && (

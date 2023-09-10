@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ResponsiveBox } from '@/components/ResponsiveBox';
 import { FootyEvent } from '@/modules/private/FootyEvent';
 
