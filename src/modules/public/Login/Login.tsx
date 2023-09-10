@@ -47,9 +47,7 @@ export const Login = () => {
       </Grid>
       <Flex flexDir="column" w="100%" justifyContent="center" gap="1rem">
         <TextInput label="E-mail" placeholder="Digite seu e-mail" borderRadius="md" />
-
         <TextInput label="Senha" placeholder="Digite a sua senha" borderRadius="md" />
-
         <LoginButton
           label="Entrar"
           borderRadius="md"
