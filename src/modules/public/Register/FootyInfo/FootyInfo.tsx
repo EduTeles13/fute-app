@@ -1,8 +1,10 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { InputNumberField } from '@/components/InputNumberField';
 import { InputTextField } from '@/components/InputTextField';
 import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
@@ -10,13 +12,13 @@ import { ReturnButton } from '@/components/ReturnButton';
 import { validator } from './validator';
 
 type RegisterFormType = {
-  email: string;
-  peladaName: string;
-  password: string;
-  confirmPassword: string;
+  startTime: string;
+  endTime: string;
+  playersPerTeam: number;
+  teamsQty: number;
 };
 
-export const Register1 = () => {
+export const FootyInfo = () => {
   const {
     register,
     handleSubmit,
@@ -26,7 +28,10 @@ export const Register1 = () => {
     resolver: yupResolver(validator),
   });
 
+  const router = useRouter();
+
   const submitRegister = (data: RegisterFormType) => {
+    router.push('/cadastrar/selecao-jogadores');
     console.log(data);
   };
 
@@ -45,28 +50,26 @@ export const Register1 = () => {
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="1rem" px="1rem">
         <InputTextField
-          errorMessage={errors?.email?.message}
-          type="text"
-          label="E-mail"
-          {...register('email')}
+          errorMessage={errors?.startTime?.message}
+          type="time"
+          label="Horário de início da pelada"
+          {...register('startTime')}
         />
         <InputTextField
-          errorMessage={errors?.peladaName?.message}
-          type="text"
-          label="Nome da pelada"
-          {...register('peladaName')}
+          errorMessage={errors?.endTime?.message}
+          label="Horário de término da pelada"
+          type="time"
+          {...register('endTime')}
         />
-        <InputTextField
-          errorMessage={errors?.password?.message}
-          type="password"
-          label="Senha"
-          {...register('password')}
+        <InputNumberField
+          errorMessage={errors?.playersPerTeam?.message}
+          label="Número de jogadores por time na pelada"
+          {...register('playersPerTeam')}
         />
-        <InputTextField
-          errorMessage={errors?.confirmPassword?.message}
-          type="password"
-          label="Confirmar senha"
-          {...register('confirmPassword')}
+        <InputNumberField
+          errorMessage={errors?.teamsQty?.message}
+          label="Número de times em cada pelada"
+          {...register('teamsQty')}
         />
         <Flex justifyContent="flex-end" mt="2rem">
           <LoginButton label="Próximo" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />

@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { ResponsiveBox } from '@/components';
-import { Register1 } from '@/modules/public/Register/parte1';
+import { Credentials } from '@/modules/public/Register/Credentials';
 
 const Register = () => {
   return (
     <ResponsiveBox>
-      <Register1 />
+      <Credentials />
     </ResponsiveBox>
   );
 };

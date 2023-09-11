@@ -1,12 +1,11 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 
+import { InputTextField } from '@/components/InputTextField';
 import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 
-import { InputTextField } from '@/components/InputTextField';
-
-export const Register2 = () => {
+export const PlayersSetup = () => {
   return (
     <Flex flexDir="column" gap="3rem" mt="2rem">
       <Grid templateColumns="repeat(4, 1fr)">
@@ -21,7 +20,8 @@ export const Register2 = () => {
         <GridItem />
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="1rem" px="1rem">
-        <InputTextField type="time" label="Horário de início da Pelada" />
+        <InputTextField type="date" label="Data da pelada" />
+        <InputTextField type="time" label="Horário de início da pelada" />
         <InputTextField label="Horário de término da pelada" type="time" />
         <InputTextField label="Senha" type="password" />
         <InputTextField label="Confirmar senha" type="password" />
