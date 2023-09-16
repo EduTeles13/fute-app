@@ -7,7 +7,7 @@ const footyEvents = [
   {
     id: '1',
     createdAt: '22/08/2023',
-    status: 'Encerrada',
+    status: 'Ativa',
   },
   {
     id: '2',
