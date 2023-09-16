@@ -1,55 +1,52 @@
-import {
-  Flex,
-  Text,
-  Grid,
-  GridItem,
-  TableContainer,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-} from '@chakra-ui/react';
+import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
+import { Home, UserCog } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
-import { InputNumberField } from '@/components/InputNumberField';
+import { CButton } from '@/components/CButton';
+import { InputTextField } from '@/components/InputTextField';
+import { Navigation } from '@/components/Navigation';
 import { ReturnButton } from '@/components/ReturnButton';
 
-type FootyEventFormType = {
+import { PlayersTable } from './PlayersTable';
+
+export type FootyEventFormType = {
   teams: {
     teamName: string;
     victoriesQty: number;
-    players: { name: string; goals: number; assistences: number }[];
+    players: { name: string; goals: number; assists: number }[];
   }[];
 };
 
 export const FootyEvent = () => {
-  const { control } = useForm<FootyEventFormType>({
+  const { data } = useSession();
+  const username = data?.user?.name;
+  const { control, register, handleSubmit } = useForm<FootyEventFormType>({
     mode: 'onChange',
+    reValidateMode: 'onSubmit',
     defaultValues: {
       teams: [
         {
-          teamName: 'time1',
+          teamName: 'Time1',
           victoriesQty: 2,
           players: [
-            { name: 'luca' },
-            { name: 'breno' },
-            { name: 'guilherMe' },
-            { name: 'eduardo' },
-            { name: 'josef' },
+            { name: 'luca', goals: 5, assists: 3 },
+            { name: 'breno', goals: 5, assists: 3 },
+            { name: 'guilherMe', goals: 5, assists: 3 },
+            { name: 'eduardo', goals: 5, assists: 3 },
+            { name: 'josef', goals: 5, assists: 3 },
           ],
         },
         {
-          teamName: 'time2',
+          teamName: 'Time2',
           victoriesQty: 0,
           players: [
-            { name: 'rob' },
-            { name: 'son' },
-            { name: 'fidalgo' },
-            { name: 'sqlJunior' },
-            { name: 'joinshua' },
+            { name: 'rob', goals: 5, assists: 3 },
+            { name: 'son', goals: 5, assists: 3 },
+            { name: 'fidalgo', goals: 5, assists: 3 },
+            { name: 'sqlJunior', goals: 5, assists: 3 },
+            { name: 'joinshua', goals: 5, assists: 3 },
           ],
         },
       ],
@@ -57,69 +54,61 @@ export const FootyEvent = () => {
   });
   const { fields: teamsFields } = useFieldArray({ name: 'teams', control });
 
-  const renderPlayerRows = (players) => {
-    return players.map((player, playerIndex) => (
-      <Tr key={playerIndex} className="no-underline-row">
-        <Td textAlign="center" border="none">
-          {player.name}
-        </Td>
-        <Td textAlign="center" border="none">
-          <InputNumberField label="" />
-        </Td>
-        <Td textAlign="center" border="none">
-          <InputNumberField label="" />
-        </Td>
-      </Tr>
-    ));
+  const handleFinishEvent = (data: FootyEventFormType) => {
+    console.log(data);
   };
 
   return (
-    <Flex flexDir="column" gap="3rem" mt="2rem" alignItems="center">
-      <Grid templateColumns="repeat(5, 1fr)">
-        <GridItem colSpan={1}>
-          <ReturnButton />
-        </GridItem>
-        <GridItem colSpan={3} display="flex" alignItems="center" justifyContent="center">
-          <Text fontWeight="bold" fontSize="lg">
-            Pelada DD/MM
-          </Text>
-        </GridItem>
-        <GridItem />
-      </Grid>
-      {teamsFields.map((team, teamIndex) => (
-        <Flex flexDir="column" gap="1rem" key={team.id} justifyContent="center" maxWidth="100%">
-          <Grid templateColumns="repeat(5, 1fr)" alignItems="center">
-            <Text fontWeight="bold" textAlign="center">
-              {team.teamName}
+    <Flex flexDir="column" height="calc(100vh - 2rem)" justifyContent="space-between">
+      <Flex flexDir="column" mt="2rem" gap="1rem">
+        <Grid templateColumns="repeat(4, 1fr)">
+          <GridItem colSpan={1}>
+            <ReturnButton />
+          </GridItem>
+          <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
+            <Text fontWeight="bold" fontSize="lg">
+              Pelada da Urna
             </Text>
-            <Text fontWeight="bold">Vitórias</Text>
-            <InputNumberField
-              label=""
-              name={`teams[${teamIndex}].victoriesQty`}
-              control={control}
-              defaultValue={team.victoriesQty}
-            />
-          </Grid>
-          <TableContainer key={team.id} style={{ borderRadius: '20px' }}>
-            <Table borderWidth="1px" borderColor="gray.300" style={{ tableLayout: 'fixed' }}>
-              <Thead>
-                <Tr>
-                  <Th fontSize="10px" textAlign="center" border="none">
-                    NOME
-                  </Th>
-                  <Th fontSize="10px" textAlign="center" border="none">
-                    GOL
-                  </Th>
-                  <Th fontSize="10px" textAlign="center" border="none">
-                    ASSISTÊNCIA
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>{renderPlayerRows(team.players)}</Tbody>
-            </Table>
-          </TableContainer>
+          </GridItem>
+          <GridItem />
+        </Grid>
+        <Flex
+          flexDir="column"
+          gap="2rem"
+          justifyContent="flex-start"
+          as="form"
+          onSubmit={handleSubmit(handleFinishEvent)}
+        >
+          {teamsFields.map((team, teamIndex) => (
+            <Flex flexDir="column" gap="1rem" key={team.id} justifyContent="center" maxWidth="100%">
+              <Flex justifyContent="flex-start" alignItems="center" gap="2rem">
+                <Text fontWeight="bold" textAlign="center">
+                  {team.teamName}
+                </Text>
+                <Flex gap="1rem" alignItems="center">
+                  <Text fontWeight="bold">Vitórias</Text>
+                  <InputTextField
+                    type="number"
+                    label=""
+                    {...register(`teams.${teamIndex}.victoriesQty`, {
+                      valueAsNumber: true,
+                    })}
+                  />
+                </Flex>
+              </Flex>
+              <PlayersTable index={teamIndex} control={control} register={register} />
+            </Flex>
+          ))}
+
+          <CButton label="Finalizar" type="submit" />
         </Flex>
-      ))}
+      </Flex>
+      <Navigation
+        routes={[
+          { icon: <Home />, route: `/admin/${username}`, section: 'home' },
+          { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
+        ]}
+      />
     </Flex>
   );
 };

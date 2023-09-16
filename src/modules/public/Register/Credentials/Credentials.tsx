@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
-import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 
 import { validator } from './validator';
@@ -73,7 +73,7 @@ export const Credentials = () => {
           {...register('confirmPassword')}
         />
         <Flex justifyContent="flex-end" mt="2rem">
-          <LoginButton label="Próximo" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
+          <CButton label="Próximo" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
         </Flex>
       </Flex>
     </Flex>

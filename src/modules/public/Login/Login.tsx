@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { getSession, signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 
+import { CButton } from '@/components/CButton';
 import { ClickableText } from '@/components/ClickableText/ClickableText';
 import { InputTextField } from '@/components/InputTextField';
-import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 import { cookies } from '@/utils';
 
@@ -87,13 +87,7 @@ export const Login = () => {
           errorMessage={errors?.password?.message}
           {...register('password')}
         />
-        <LoginButton
-          type="submit"
-          label="Entrar"
-          borderRadius="md"
-          width="5rem"
-          alignSelf="flex-end"
-        />
+        <CButton type="submit" label="Entrar" borderRadius="md" width="5rem" alignSelf="flex-end" />
       </Flex>
       <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/cadastrar" />
     </Flex>

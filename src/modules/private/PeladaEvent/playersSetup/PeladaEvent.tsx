@@ -1,8 +1,8 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 
+import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
-import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 
 export const PlayersSetup = () => {
@@ -26,7 +26,7 @@ export const PlayersSetup = () => {
         <InputTextField label="Senha" type="password" />
         <InputTextField label="Confirmar senha" type="password" />
         <Flex justifyContent="flex-end" mt="2rem">
-          <LoginButton label="Próximo" borderRadius="md" height="2.1rem" w="5.5rem" />
+          <CButton label="Próximo" borderRadius="md" height="2.1rem" w="5.5rem" />
         </Flex>
       </Flex>
     </Flex>
