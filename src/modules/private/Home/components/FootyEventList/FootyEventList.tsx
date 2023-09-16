@@ -1,6 +1,8 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { PlusCircle } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import React from 'react';
 
 const footyEvents = [
@@ -23,10 +25,14 @@ const footyEvents = [
 
 export const FootyEventList = () => {
   const { query, push } = useRouter();
+  const { data } = useSession();
+  const username = data?.user?.name;
   return (
     <Flex flexDir="column" alignItems="center" justifyContent="flex-start" gap="3rem">
       <Flex justifyContent="center" alignItems="center">
-        <PlusCircle size={30} />
+        <Link href={`/admin/${username}/criacao`}>
+          <PlusCircle size={30} />
+        </Link>
       </Flex>
       <Flex flexDir="column" gap="1rem" w="100%">
         {footyEvents.map((event) => {
