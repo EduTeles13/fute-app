@@ -22,7 +22,7 @@ export const InputNumberFieldBase: ForwardRefRenderFunction<
   return (
     <Flex flexDir="column">
       <Text>{label}</Text>
-      <NumberInput defaultValue={20} min={0} max={40}>
+      <NumberInput defaultValue={0} min={0} max={40}>
         <NumberInputField
           height="2rem"
           borderRadius="sm"
