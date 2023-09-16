@@ -19,7 +19,7 @@ export const PlayersTable = ({
 
   return (
     <TableContainer border="1px" borderColor="gray.300" borderRadius="lg">
-      <Table style={{ tableLayout: 'fixed' }}>
+      <Table>
         <Thead>
           <Tr>
             <Th fontSize="sm" textAlign="center" border="none">

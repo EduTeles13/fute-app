@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Providers session={pageProps.session}>
       <Head>
-        <title>Personal Soft Leap</title>
+        <title>Fute</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" sizes="180x180" href="/logo.png" />
       </Head>

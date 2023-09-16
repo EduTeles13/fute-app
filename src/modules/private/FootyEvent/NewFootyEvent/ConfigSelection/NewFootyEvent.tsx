@@ -1,12 +1,13 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { CButton } from '@/components/CButton';
 import { InputNumberField } from '@/components/InputNumberField';
 import { InputTextField } from '@/components/InputTextField';
-import { LoginButton } from '@/components/LoginButton';
 import { ReturnButton } from '@/components/ReturnButton';
 
 import { validator } from './validator';
@@ -27,11 +28,12 @@ export const NewFootyEvent = () => {
     mode: 'onChange',
     resolver: yupResolver(validator),
   });
-
+  const { data } = useSession();
+  const username = data?.user?.name;
   const router = useRouter();
 
   const submitRegister = (data: RegisterFormType) => {
-    router.push('');
+    router.push(`/admin/${username}/criacao/selecao-de-jogadores`);
     console.log(data);
   };
 
@@ -64,15 +66,15 @@ export const NewFootyEvent = () => {
         <InputNumberField
           errorMessage={errors?.playersPerTeam?.message}
           label="Número de jogadores por time na pelada"
-          {...register('playersPerTeam')}
+          {...register('playersPerTeam', { valueAsNumber: true })}
         />
         <InputNumberField
           errorMessage={errors?.teamsQty?.message}
           label="Número de times em cada pelada"
-          {...register('teamsQty')}
+          {...register('teamsQty', { valueAsNumber: true })}
         />
         <Flex justifyContent="flex-end" mt="2rem">
-          <LoginButton label="Avançar" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
+          <CButton label="Avançar" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
         </Flex>
       </Flex>
     </Flex>
