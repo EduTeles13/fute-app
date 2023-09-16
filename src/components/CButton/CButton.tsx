@@ -1,11 +1,11 @@
 import { Button, ButtonProps } from '@chakra-ui/react';
 
-interface LoginButtonProps extends ButtonProps {
+interface CButtonProps extends ButtonProps {
   label: string;
   onClick?: () => void;
 }
 
-export const LoginButton: React.FC<LoginButtonProps> = ({ label, onClick, ...rest }) => {
+export const CButton: React.FC<CButtonProps> = ({ label, onClick, ...rest }) => {
   return (
     <Button
       colorScheme="white"

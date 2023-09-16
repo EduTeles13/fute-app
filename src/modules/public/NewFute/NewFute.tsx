@@ -12,8 +12,8 @@ import {
   Button,
 } from '@chakra-ui/react';
 
+import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
-import { LoginButton } from '@/components/LoginButton';
 
 export const NewFute = () => {
   return (
@@ -60,13 +60,7 @@ export const NewFute = () => {
         <Switch colorScheme="green" size="lg" marginTop="0.5rem" />
       </Flex>
 
-      <LoginButton
-        label="Criar"
-        borderRadius="md"
-        width="5rem"
-        marginTop="5rem"
-        alignSelf="flex-end"
-      />
+      <CButton label="Criar" borderRadius="md" width="5rem" marginTop="5rem" alignSelf="flex-end" />
     </Flex>
   );
 };
