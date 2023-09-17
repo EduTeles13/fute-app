@@ -95,7 +95,9 @@ export const FootyEvent = () => {
             </Flex>
           ))}
 
-          <CButton label="Finalizar" type="submit" />
+          <Flex justifyContent="flex-end">
+            <CButton label="Finalizar" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

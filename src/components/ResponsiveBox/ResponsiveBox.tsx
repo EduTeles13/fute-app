@@ -10,6 +10,7 @@ export const ResponsiveBox: React.FC<ResponsiveBoxProps> = ({ children, ...rest 
   return (
     <Box
       as={SlideFade}
+      minH="100vh"
       position="relative"
       overflowY="auto"
       in={true}

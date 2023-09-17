@@ -11,7 +11,7 @@ export const HomeFooty = () => {
   const username = data?.user?.name;
 
   return (
-    <Flex flexDir="column" height="calc(100vh - 2rem)" justifyContent="space-between">
+    <Flex flexDir="column" height="100%" justifyContent="space-between">
       <Flex flexDir="column" gap="3rem" mt="2rem">
         <Grid templateColumns="repeat(4, 1fr)">
           <GridItem colSpan={1} />

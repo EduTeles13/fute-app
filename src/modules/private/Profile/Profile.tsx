@@ -1,16 +1,18 @@
 import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { BarChart4, Home, UserCog } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import React from 'react';
 
+import { ButtonComponent } from '@/components/Button';
 import { Navigation } from '@/components/Navigation';
+import { cookies } from '@/utils';
 
 export const Profile = () => {
   const { data } = useSession();
   const username = data?.user?.name;
 
   return (
-    <Flex flexDir="column" height="calc(100vh - 2rem)" justifyContent="space-between">
+    <Flex flexDir="column" height="100%" justifyContent="space-between" gap="1rem">
       <Flex flexDir="column" gap="3rem" mt="2rem">
         <Grid templateColumns="repeat(4, 1fr)">
           <GridItem colSpan={1} />
@@ -22,6 +24,13 @@ export const Profile = () => {
           <GridItem />
         </Grid>
       </Flex>
+      <ButtonComponent
+        label="Logout"
+        onClick={() => {
+          signOut({ redirect: true });
+          cookies.clearAccess();
+        }}
+      />
       <Navigation
         routes={[
           { icon: <Home />, route: `/admin/${username}`, section: 'home' },
