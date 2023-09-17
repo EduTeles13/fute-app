@@ -11,6 +11,10 @@ export const Landing = () => {
     router.push('/entrar');
   };
 
+  const handleButtonClick2 = () => {
+    router.push('/futes');
+  };
+
   return (
     <VStack spacing={4} mx="auto" my="auto">
       <Flex flexDir="column" justifyContent="space-between" gap="10rem" alignItems="center">
@@ -31,7 +35,9 @@ export const Landing = () => {
             </Link>
           </Box>
           <Box>
-            <ButtonComponent label="Jogador" width="155px" />
+            <Link onClick={handleButtonClick2}>
+              <ButtonComponent label="Jogador" width="155px" />
+            </Link>
           </Box>
         </Flex>
       </Flex>
