@@ -1,67 +1,84 @@
-import {
-  Flex,
-  Grid,
-  GridItem,
-  Switch,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { Flex, Grid, GridItem, Text, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
 
+import { useCreateFootyEvent } from '@/api/FootyEvent/hooks/useCreateFootyEvent';
 import { CButton } from '@/components/CButton';
-import { CModal } from '@/components/Modal/CMolda';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyEventStore } from '@/store/FootyEventStore';
 
-import { AddPlayerModal } from './components/AddPlayerModal';
+import { DailyPlayers } from './components/DailyPlayers';
+import { MonthlyPlayers } from './components/MonthlyPlayers';
+
+type Player = { name: string; stars: number; presence: boolean };
 
 export type PlayerSelectionFormType = {
-  players: { name: string; stars: number; isMonthlyPlayer: boolean }[];
+  monthlyPlayers: Player[];
+  dailyPlayers: Player[];
 };
 
-export const PlayersSelection = () => {
-  const [open, setOpen] = useState<boolean>(false);
+export const PlayerSelection = () => {
+  const { push } = useRouter();
+  const { data } = useSession();
+  const toast = useToast();
+  const username = data?.user?.name;
+  const config = useFootyEventStore((state) => state.config);
+  const { mutate } = useCreateFootyEvent();
   const { handleSubmit, control } = useForm<PlayerSelectionFormType>({
     mode: 'onChange',
     defaultValues: {
-      players: [
+      monthlyPlayers: [
         {
           name: 'Luca',
           stars: 5,
-          isMonthlyPlayer: true,
+          presence: true,
         },
         {
           name: 'Gui',
           stars: 5,
-          isMonthlyPlayer: true,
+          presence: true,
         },
         {
           name: 'Breno',
           stars: 5,
-          isMonthlyPlayer: true,
+          presence: true,
+        },
+      ],
+      dailyPlayers: [
+        {
+          name: 'Dudu',
+          stars: 4,
+          presence: true,
         },
       ],
     },
   });
 
-  const { fields, append } = useFieldArray({ control, name: 'players' });
-
-  const onOpen = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
-
   const submitPlayers = (data: PlayerSelectionFormType) => {
-    onOpen();
-    console.log(data);
+    mutate(
+      { footyId: 'teste', body: { ...config, players: { ...data } } },
+      {
+        onSuccess: (response) => {
+          const id = response.id ?? 'nova-pelada';
+          toast({
+            title: 'Pelada criada com sucesso',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+          });
+          push(`/admin/${username}/${id}`);
+        },
+        onError: () => {
+          toast({
+            title: 'Erro ao criar pelada',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -72,52 +89,16 @@ export const PlayersSelection = () => {
         </GridItem>
         <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
           <Text fontWeight="bold" fontSize="lg">
-            Criação de Evento de Pelada
+            Nova pelada
           </Text>
         </GridItem>
         <GridItem />
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="2rem" px="1rem">
-        <AddPlayerModal append={append} />
-        <TableContainer border="1px" borderColor="gray.300" borderRadius="lg">
-          <Table>
-            <Thead>
-              <Tr>
-                <Th fontSize="sm" textAlign="center" border="none">
-                  NOME
-                </Th>
-                <Th fontSize="sm" textAlign="center" border="none">
-                  ESTRELAS
-                </Th>
-                <Th fontSize="sm" textAlign="center" border="none">
-                  MENSALISTA
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {fields.map((player) => {
-                return (
-                  <Tr key={player.id} className="no-underline-row">
-                    <Td textAlign="center" border="none">
-                      {player.name}
-                    </Td>
-                    <Td textAlign="center" border="none">
-                      {player.stars}
-                    </Td>
-                    <Td textAlign="center" border="none">
-                      <Switch colorScheme="green" isChecked={player.isMonthlyPlayer} />
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
+        <MonthlyPlayers control={control} />
+        <DailyPlayers control={control} />
         <CButton label="Finalizar" type="submit" />
       </Flex>
-      <CModal isOpen={open} onClose={onClose}>
-        Modal
-      </CModal>
     </Flex>
   );
 };

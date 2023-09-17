@@ -9,6 +9,7 @@ import { CButton } from '@/components/CButton';
 import { InputNumberField } from '@/components/InputNumberField';
 import { InputTextField } from '@/components/InputTextField';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyEventStore } from '@/store/FootyEventStore';
 
 import { validator } from './validator';
 
@@ -19,7 +20,7 @@ type RegisterFormType = {
   teamsQty: number;
 };
 
-export const NewFootyEvent = () => {
+export const ConfigSelection = () => {
   const {
     register,
     handleSubmit,
@@ -31,10 +32,11 @@ export const NewFootyEvent = () => {
   const { data } = useSession();
   const username = data?.user?.name;
   const router = useRouter();
+  const setConfig = useFootyEventStore((state) => state.setConfig);
 
   const submitRegister = (data: RegisterFormType) => {
     router.push(`/admin/${username}/criacao/selecao-de-jogadores`);
-    console.log(data);
+    setConfig(data);
   };
 
   return (
@@ -45,7 +47,7 @@ export const NewFootyEvent = () => {
         </GridItem>
         <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
           <Text fontWeight="bold" fontSize="lg">
-            Criação de Evento de Pelada
+            Nova pelada
           </Text>
         </GridItem>
         <GridItem />

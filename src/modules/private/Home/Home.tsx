@@ -1,5 +1,5 @@
 import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
-import { Home, UserCog } from 'lucide-react';
+import { BarChart4, Home, UserCog } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 
 import { Navigation } from '@/components/Navigation';
@@ -27,6 +27,7 @@ export const HomeFooty = () => {
       <Navigation
         routes={[
           { icon: <Home />, route: `/admin/${username}`, section: 'home' },
+          { icon: <BarChart4 />, route: `/admin/${username}/estatisticas`, section: 'home' },
           { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
         ]}
       />

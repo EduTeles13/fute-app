@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Navigation } from '@/components/Navigation';
 
-export const Profile = () => {
+export const Stats = () => {
   const { data } = useSession();
   const username = data?.user?.name;
 
@@ -16,7 +16,7 @@ export const Profile = () => {
           <GridItem colSpan={1} />
           <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
             <Text fontWeight="bold" fontSize="lg">
-              Configurações
+              Estatísticas
             </Text>
           </GridItem>
           <GridItem />
