@@ -97,7 +97,9 @@ export const PlayerSelection = () => {
       <Flex flexDir="column" justifyContent="space-between" gap="2rem" px="1rem">
         <MonthlyPlayers control={control} />
         <DailyPlayers control={control} />
-        <CButton label="Finalizar" type="submit" />
+        <Flex justifyContent="flex-end">
+          <CButton label="Finalizar" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
+        </Flex>
       </Flex>
     </Flex>
   );

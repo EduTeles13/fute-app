@@ -29,7 +29,7 @@ const footyEvents = [
 ];
 
 export const FootyEventList = () => {
-  const { query, push } = useRouter();
+  const { push } = useRouter();
   const { data } = useSession();
   const username = data?.user?.name;
   return (
@@ -45,7 +45,7 @@ export const FootyEventList = () => {
           <PlusCircle size={30} />
         </Link>
       </Flex>
-      <Flex flexDir="column" gap="1rem" w="100%">
+      <Flex flexDir="column" gap="1rem" w="100%" overflowY="auto">
         {footyEvents.map((event) => {
           return (
             <Flex
@@ -56,7 +56,7 @@ export const FootyEventList = () => {
               borderRadius="md"
               boxShadow="md"
               gap="0.5rem"
-              onClick={() => push(`/admin/${query.footy}/${event.id}`)}
+              onClick={() => push(`/admin/${username}/${event.id}`)}
             >
               <Text color="black" fontWeight="semibold" mb="1.5rem">
                 {event.createdAt}

@@ -137,7 +137,16 @@ export const PlayersSetup = () => {
             </Tbody>
           </Table>
         </TableContainer>
-        <CButton label="Finalizar" type="button" onClick={handleSubmit(submitPlayers)} />
+        <Flex justifyContent="flex-end">
+          <CButton
+            label="Finalizar"
+            borderRadius="md"
+            height="2.1rem"
+            w="5.5rem"
+            type="button"
+            onClick={handleSubmit(submitPlayers)}
+          />
+        </Flex>
       </Flex>
       <CModal isOpen={open} onClose={onClose}>
         Modal
