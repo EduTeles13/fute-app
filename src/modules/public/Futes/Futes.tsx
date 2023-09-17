@@ -1,12 +1,4 @@
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Flex,
-  GridItem,
-} from '@chakra-ui/react';
+import { Input, Flex, GridItem } from '@chakra-ui/react';
 import React from 'react';
 
 import { ReturnButton } from '@/components/ReturnButton';
@@ -17,13 +9,7 @@ export const Futes = () => {
       <GridItem colSpan={1}>
         <ReturnButton />
       </GridItem>
-      <NumberInput w="70%">
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
+      <Input placeholder="Digite o código da pelada" w="70%" />
     </Flex>
   );
 };
