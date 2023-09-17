@@ -1,12 +1,9 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
-import { Home, UserCog } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
-import { Navigation } from '@/components/Navigation';
 import { ReturnButton } from '@/components/ReturnButton';
 
 import { PlayersTable } from './PlayersTable';
@@ -20,8 +17,6 @@ export type FootyEventFormType = {
 };
 
 export const FootyEvent = () => {
-  const { data } = useSession();
-  const username = data?.user?.name;
   const { control, register, handleSubmit } = useForm<FootyEventFormType>({
     mode: 'onChange',
     reValidateMode: 'onSubmit',
@@ -59,7 +54,7 @@ export const FootyEvent = () => {
   };
 
   return (
-    <Flex flexDir="column" height="calc(100vh - 2rem)" justifyContent="space-between">
+    <Flex flexDir="column" height="100%" justifyContent="space-between">
       <Flex flexDir="column" mt="2rem" gap="1rem">
         <Grid templateColumns="repeat(4, 1fr)">
           <GridItem colSpan={1}>
@@ -103,12 +98,6 @@ export const FootyEvent = () => {
           <CButton label="Finalizar" type="submit" />
         </Flex>
       </Flex>
-      <Navigation
-        routes={[
-          { icon: <Home />, route: `/admin/${username}`, section: 'home' },
-          { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
-        ]}
-      />
     </Flex>
   );
 };

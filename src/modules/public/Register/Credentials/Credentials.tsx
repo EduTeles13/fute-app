@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyStore } from '@/store/FootyStore';
 
 import { validator } from './validator';
 
@@ -18,6 +19,7 @@ type RegisterFormType = {
 };
 
 export const Credentials = () => {
+  const setCredentials = useFootyStore((state) => state.setCredentials);
   const {
     register,
     handleSubmit,
@@ -30,8 +32,12 @@ export const Credentials = () => {
   const router = useRouter();
 
   const submitRegister = (data: RegisterFormType) => {
+    setCredentials({
+      email: data.email,
+      password: data.password,
+      username: data.peladaName,
+    });
     router.push('/cadastrar/informacoes-pelada');
-    console.log(data);
   };
 
   return (

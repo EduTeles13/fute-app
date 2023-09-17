@@ -21,6 +21,11 @@ const footyEvents = [
     createdAt: '06/09/2023',
     status: 'Encerrada',
   },
+  {
+    id: '1',
+    createdAt: '22/08/2023',
+    status: 'Ativa',
+  },
 ];
 
 export const FootyEventList = () => {
@@ -28,7 +33,13 @@ export const FootyEventList = () => {
   const { data } = useSession();
   const username = data?.user?.name;
   return (
-    <Flex flexDir="column" alignItems="center" justifyContent="flex-start" gap="3rem">
+    <Flex
+      flexDir="column"
+      alignItems="center"
+      justifyContent="flex-start"
+      overflowY="auto"
+      gap="3rem"
+    >
       <Flex justifyContent="center" alignItems="center">
         <Link href={`/admin/${username}/criacao`}>
           <PlusCircle size={30} />

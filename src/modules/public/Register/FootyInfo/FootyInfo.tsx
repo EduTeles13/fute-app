@@ -8,6 +8,7 @@ import { CButton } from '@/components/CButton';
 import { InputNumberField } from '@/components/InputNumberField';
 import { InputTextField } from '@/components/InputTextField';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyStore } from '@/store/FootyStore';
 
 import { validator } from './validator';
 
@@ -19,6 +20,7 @@ type RegisterFormType = {
 };
 
 export const FootyInfo = () => {
+  const setFootyInfo = useFootyStore((state) => state.setFootyInfo);
   const {
     register,
     handleSubmit,
@@ -31,8 +33,8 @@ export const FootyInfo = () => {
   const router = useRouter();
 
   const submitRegister = (data: RegisterFormType) => {
+    setFootyInfo(data);
     router.push('/cadastrar/selecao-jogadores');
-    console.log(data);
   };
 
   return (

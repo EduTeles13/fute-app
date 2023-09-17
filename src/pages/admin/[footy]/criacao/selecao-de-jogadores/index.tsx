@@ -1,10 +1,10 @@
 import { ResponsiveBox } from '@/components/ResponsiveBox';
-import { PlayersSelection } from '@/modules/private/FootyEvent/NewFootyEvent';
+import { PlayerSelection } from '@/modules/private/FootyEvent/NewFootyEvent';
 
 const NewFootyEventPlayersSelection = () => {
   return (
     <ResponsiveBox>
-      <PlayersSelection />
+      <PlayerSelection />
     </ResponsiveBox>
   );
 };
