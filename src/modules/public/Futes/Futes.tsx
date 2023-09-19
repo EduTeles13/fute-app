@@ -3,6 +3,7 @@ import { Home, LogIn, Search } from 'lucide-react';
 import { useRouter } from 'next/router';
 
 import { Navigation } from '@/components/Navigation';
+import { ReturnButton } from '@/components/ReturnButton';
 
 const footy = [
   {
@@ -38,7 +39,9 @@ export const Futes = () => {
     <Flex flexDir="column" height="100%" gap="2rem">
       <Flex flexDir="column" gap="3rem" mt="2rem">
         <Grid templateColumns="repeat(4, 1fr)">
-          <GridItem colSpan={1} />
+          <GridItem colSpan={1}>
+            <ReturnButton />
+          </GridItem>
           <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
             <Text fontWeight="bold" fontSize="lg">
               Buscar Fute

@@ -1,4 +1,16 @@
-import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from '@chakra-ui/react';
 import { BarChart4, Home, LogIn } from 'lucide-react';
 import React from 'react';
 
@@ -18,6 +30,34 @@ export const Stats = () => {
           <GridItem />
         </Grid>
       </Flex>
+      <TableContainer marginTop="3rem">
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>nome</Th>
+              <Th>Gols</Th>
+              <Th>Assistências</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>Guilherme</Td>
+              <Td>10</Td>
+              <Td>5</Td>
+            </Tr>
+            <Tr>
+              <Td>Eduardo</Td>
+              <Td>58</Td>
+              <Td>196</Td>
+            </Tr>
+            <Tr>
+              <Td>Breno</Td>
+              <Td>1</Td>
+              <Td>1</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
       <Navigation
         routes={[
           { icon: <Home />, route: `/futes/pelada-urna`, section: 'home' },

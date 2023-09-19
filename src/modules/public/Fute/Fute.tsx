@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { Navigation } from '@/components/Navigation';
+import { ReturnButton } from '@/components/ReturnButton';
 
 const footyEvents = [
   {
@@ -34,7 +35,9 @@ export const Fute = () => {
     <Flex flexDir="column" height="calc(100vh - 2rem)" justifyContent="space-between">
       <Flex flexDir="column" gap="3rem" mt="2rem">
         <Grid templateColumns="repeat(4, 1fr)">
-          <GridItem colSpan={1} />
+          <GridItem colSpan={1}>
+            <ReturnButton />
+          </GridItem>
           <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
             <Text fontWeight="bold" fontSize="lg">
               Pelada da Urna

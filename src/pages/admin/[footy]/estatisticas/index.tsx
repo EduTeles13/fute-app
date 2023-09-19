@@ -1,5 +1,5 @@
 import { ResponsiveBox } from '@/components';
-import { Stats } from '@/modules/private/Stats';
+import { Stats } from '@/modules/public/Stats';
 
 const StatsScreen = () => {
   return (
