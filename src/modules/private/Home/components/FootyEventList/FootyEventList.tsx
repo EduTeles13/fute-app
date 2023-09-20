@@ -1,4 +1,5 @@
 import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -48,7 +49,7 @@ export const FootyEventList = () => {
                 onClick={() => push(`/admin/${footyId}/${event.id}`)}
               >
                 <Text color="black" fontWeight="semibold">
-                  {new Date(event.created_at).toUTCString()}
+                  {dayjs(event.created_at).format('DD/MM/YYYY HH:mm')}
                 </Text>
                 <Text color="black" fontWeight="semibold">
                   {event.footy.location}

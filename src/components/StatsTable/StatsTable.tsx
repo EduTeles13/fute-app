@@ -1,13 +1,11 @@
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import React from 'react';
 
-const mockData = [
-  { name: 'breno', goals: 2, assists: 5 },
-  { name: 'breno', goals: 2, assists: 5 },
-  { name: 'breno', goals: 2, assists: 5 },
-];
+type StatsTableProps = {
+  data: { playerName: string; goals: number; assists: number }[];
+};
 
-export const StatsTable = () => {
+export const StatsTable = ({ data }: StatsTableProps) => {
   return (
     <TableContainer border="1px" borderColor="gray.300" borderRadius="lg">
       <Table>
@@ -25,11 +23,11 @@ export const StatsTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {mockData.map((player, index) => {
+          {data.map((player, index) => {
             return (
               <Tr key={index} className="no-underline-row">
                 <Td textAlign="center" border="none">
-                  {player.name}
+                  {player.playerName}
                 </Td>
                 <Td textAlign="center" border="none">
                   {player.goals}

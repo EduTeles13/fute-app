@@ -40,7 +40,7 @@ export const PlayersTable = ({
                 <Td textAlign="center" border="none">
                   {player.name}
                 </Td>
-                <Td textAlign="center" border="none">
+                <Td textAlign="center" border="none" minWidth="7rem">
                   <InputTextField
                     label=""
                     type="number"

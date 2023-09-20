@@ -21,7 +21,7 @@ export type FootyEventFormType = {
 
 export const GenView = () => {
   const { data } = useSession();
-  const username = data?.user?.name;
+  const footyId = data?.user?.id;
   const { control, register, handleSubmit } = useForm<FootyEventFormType>({
     mode: 'onChange',
     reValidateMode: 'onSubmit',
@@ -105,8 +105,8 @@ export const GenView = () => {
       </Flex>
       <Navigation
         routes={[
-          { icon: <Home />, route: `/admin/${username}`, section: 'home' },
-          { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
+          { icon: <Home />, route: `/admin/${footyId}`, section: 'home' },
+          { icon: <UserCog />, route: `/admin/${footyId}/profile`, section: 'profile' },
         ]}
       />
     </Flex>

@@ -1,13 +1,17 @@
-import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import { Center, Flex, Grid, GridItem, Spinner, Text } from '@chakra-ui/react';
 import { BarChart4, Home, UserCog } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
+import { useGetFootyStats } from '@/api/Footy/hooks/useGetFootyStats';
 import { Navigation } from '@/components/Navigation';
+import { StatsTable } from '@/components/StatsTable/StatsTable';
 
 export const Stats = () => {
   const { data } = useSession();
   const footyId = data?.user?.id;
+
+  const { data: stats, isLoading } = useGetFootyStats({ id: footyId as string });
 
   return (
     <Flex flexDir="column" height="100%" justifyContent="space-between">
@@ -21,6 +25,13 @@ export const Stats = () => {
           </GridItem>
           <GridItem />
         </Grid>
+        {isLoading ? (
+          <Center mt={6}>
+            <Spinner color="primary.100" />
+          </Center>
+        ) : (
+          <StatsTable data={stats?.data ?? []} />
+        )}
       </Flex>
       <Navigation
         routes={[
