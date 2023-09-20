@@ -41,8 +41,8 @@ export const Login = () => {
     if (result?.status == 200) {
       const session: any = await getSession();
       cookies.setAccess(session?.user.access_token);
-      const footyUsername = session.user?.name;
-      await push(`/admin/${footyUsername}`);
+      const footyId = session.user?.user?.id;
+      await push(`/admin/${footyId}`);
     } else {
       toast({
         title: 'Usuário ou senha incorreta.',

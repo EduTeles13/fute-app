@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 
 type Config = {
+  name: string;
+  location: string;
   startTime: string;
   endTime: string;
   playersPerTeam: number;
@@ -27,6 +29,8 @@ export const useFootyStore = create<FootyStoreType>((set) => ({
     password: '',
   },
   footyInfo: {
+    name: '',
+    location: '',
     startTime: '',
     endTime: '',
     playersPerTeam: 0,

@@ -15,8 +15,8 @@ export const validator = yup.object().shape({
           return true;
         }
         // Converta as strings de horário em objetos Date para comparar
-        const startTimeDate = new Date(`1970-01-01T${startTime}`);
-        const endTimeDate = new Date(`1970-01-01T${endTime}`);
+        const startTimeDate = new Date(startTime);
+        const endTimeDate = new Date(endTime);
         return startTimeDate < endTimeDate;
       },
     ),
