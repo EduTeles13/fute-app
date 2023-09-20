@@ -1,10 +1,10 @@
-import { PageLayout } from '@/components';
-import { HomePage } from '@/modules/HomePage';
+import { ResponsiveBox } from '@/components/ResponsiveBox';
+import { Landing } from '@/modules/public/Landing';
 
 export default function Home() {
   return (
-    <PageLayout>
-      <HomePage />
-    </PageLayout>
+    <ResponsiveBox>
+      <Landing />
+    </ResponsiveBox>
   );
 }

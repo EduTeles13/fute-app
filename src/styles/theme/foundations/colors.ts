@@ -5,15 +5,8 @@ import tailwindColors from './tailwindColors';
 export const colors = {
   ...theme.colors,
   ...tailwindColors,
-  brand: {
-    blue: 'rgba(64, 215, 224)',
-    green: '#3AF0AF',
-  },
   primary: {
-    100: '#E6F1F8',
-    200: '#18BCE2',
-    300: '#0172B9',
-    400: '#034780',
+    100: '#1DD650',
   },
   gray: {
     ...tailwindColors.gray,

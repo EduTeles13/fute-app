@@ -1,12 +1,12 @@
-import { PageLayout } from '@/components';
-import { LoginPage } from '@/modules/LoginPage';
+import { ResponsiveBox } from '@/components';
+import { Login } from '@/modules/public/Login';
 
-const Login = () => {
+const LoginScreen = () => {
   return (
-    <PageLayout>
-      <LoginPage />
-    </PageLayout>
+    <ResponsiveBox>
+      <Login />
+    </ResponsiveBox>
   );
 };
 
-export default Login;
+export default LoginScreen;
