@@ -1,6 +1,7 @@
 import { Flex, Grid, GridItem, Text, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useCreateFootyEvent } from '@/api/FootyEvent/hooks/useCreateFootyEvent';
@@ -11,7 +12,7 @@ import { useFootyEventStore } from '@/store/FootyEventStore';
 import { DailyPlayers } from './components/DailyPlayers';
 import { MonthlyPlayers } from './components/MonthlyPlayers';
 
-type Player = { name: string; stars: number; presence: boolean };
+type Player = { id?: string; name: string; stars: number; presence: boolean };
 
 export type PlayerSelectionFormType = {
   monthlyPlayers: Player[];
@@ -22,52 +23,82 @@ export const PlayerSelection = () => {
   const { push } = useRouter();
   const { data } = useSession();
   const toast = useToast();
-  const username = data?.user?.name;
+  const footyId = data?.user?.id;
+  const footyPlayers = useMemo(() => {
+    return data?.user?.user?.players ?? [];
+  }, [data]);
+
   const config = useFootyEventStore((state) => state.config);
   const { mutate } = useCreateFootyEvent();
-  const { handleSubmit, control } = useForm<PlayerSelectionFormType>({
+  const { handleSubmit, control, reset } = useForm<PlayerSelectionFormType>({
     mode: 'onChange',
-    defaultValues: {
-      monthlyPlayers: [
-        {
-          name: 'Luca',
-          stars: 5,
-          presence: true,
-        },
-        {
-          name: 'Gui',
-          stars: 5,
-          presence: true,
-        },
-        {
-          name: 'Breno',
-          stars: 5,
-          presence: true,
-        },
-      ],
-      dailyPlayers: [
-        {
-          name: 'Dudu',
-          stars: 4,
-          presence: true,
-        },
-      ],
-    },
   });
 
-  const submitPlayers = (data: PlayerSelectionFormType) => {
-    mutate(
-      { footyId: 'teste', body: { ...config, players: { ...data } } },
+  useEffect(() => {
+    const formData = footyPlayers.reduce<{
+      dailyPlayers: Player[];
+      monthlyPlayers: Player[];
+    }>(
+      (acc, cur) => {
+        if (cur.type === 'daily') {
+          acc.dailyPlayers.push({ id: cur.id, name: cur.name, stars: cur.stars, presence: true });
+        }
+
+        if (cur.type === 'monthly') {
+          acc.monthlyPlayers.push({ id: cur.id, name: cur.name, stars: cur.stars, presence: true });
+        }
+
+        return {
+          dailyPlayers: [...acc.dailyPlayers],
+          monthlyPlayers: [...acc.monthlyPlayers],
+        };
+      },
       {
-        onSuccess: (response) => {
-          const id = response.id ?? 'nova-pelada';
+        dailyPlayers: [],
+        monthlyPlayers: [],
+      },
+    );
+
+    reset({ ...formData });
+  }, [footyPlayers, reset]);
+
+  const submitPlayers = (data: PlayerSelectionFormType) => {
+    const daily = data.dailyPlayers.map((player) => ({
+      name: player.name,
+      ...(player.id && { id: player.id }),
+      stars: player.stars,
+      type: 'daily,',
+    }));
+
+    const monthly = data.monthlyPlayers.map((player) => ({
+      name: player.name,
+      ...(player.id && { id: player.id }),
+      stars: player.stars,
+      type: 'monthly,',
+    }));
+
+    const players = [...monthly, ...daily];
+
+    mutate(
+      {
+        body: {
+          footyId: footyId as string,
+          playersPerTeam: config.playersPerTeam,
+          numberOfTeams: config.teamsQty,
+          endHour: new Date(config.endTime).toISOString(),
+          startHour: new Date(config.startTime).toISOString(),
+          players: players,
+        },
+      },
+      {
+        onSuccess: () => {
           toast({
             title: 'Pelada criada com sucesso',
             status: 'success',
             duration: 3000,
             isClosable: true,
           });
-          push(`/admin/${username}/${id}`);
+          push(`/admin/${footyId}`);
         },
         onError: () => {
           toast({

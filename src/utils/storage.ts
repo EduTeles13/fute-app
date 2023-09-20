@@ -1,4 +1,4 @@
-import { AuthUser } from '@/api/auth';
+import { AuthUser } from '@/api/auth/types';
 import { USER_INFO_ID } from '@/config';
 
 export const storage = {

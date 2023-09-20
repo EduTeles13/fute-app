@@ -37,25 +37,6 @@ export const PlayersSetup = () => {
   const credentials = useFootyStore((state) => state.credentials);
   const { handleSubmit, control } = useForm<PlayerSetupFormType>({
     mode: 'onChange',
-    defaultValues: {
-      players: [
-        {
-          name: 'Luca',
-          stars: 5,
-          isMonthlyPlayer: true,
-        },
-        {
-          name: 'Gui',
-          stars: 5,
-          isMonthlyPlayer: true,
-        },
-        {
-          name: 'Breno',
-          stars: 5,
-          isMonthlyPlayer: true,
-        },
-      ],
-    },
   });
 
   const { fields, append } = useFieldArray({ control, name: 'players' });
@@ -70,7 +51,23 @@ export const PlayersSetup = () => {
 
   const submitPlayers = (data: PlayerSetupFormType) => {
     mutate(
-      { body: { ...credentials, ...footyInfo, ...data } },
+      {
+        body: {
+          ...credentials,
+          username: credentials.username.trim(),
+          name: footyInfo.name,
+          location: footyInfo.location,
+          end_hour: new Date(footyInfo.endTime).toISOString(),
+          start_hour: new Date(footyInfo.startTime).toISOString(),
+          players_per_team: footyInfo.playersPerTeam,
+          num_of_players: footyInfo.teamsQty,
+          players: data.players.map((player) => ({
+            name: player.name,
+            stars: player.stars,
+            type: player.isMonthlyPlayer ? 'monthly' : 'daily',
+          })),
+        },
+      },
       {
         onSuccess: () => {
           onOpen();

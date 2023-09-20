@@ -13,6 +13,8 @@ import { useFootyStore } from '@/store/FootyStore';
 import { validator } from './validator';
 
 type RegisterFormType = {
+  name: string;
+  location: string;
   startTime: string;
   endTime: string;
   playersPerTeam: number;
@@ -52,15 +54,25 @@ export const FootyInfo = () => {
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="1rem" px="1rem">
         <InputTextField
+          errorMessage={errors?.name?.message}
+          label="Nome da pelada"
+          {...register('name')}
+        />
+        <InputTextField
+          errorMessage={errors?.location?.message}
+          label="Localização da pelada"
+          {...register('location')}
+        />
+        <InputTextField
           errorMessage={errors?.startTime?.message}
-          type="time"
+          type="datetime-local"
           label="Horário de início da pelada"
           {...register('startTime')}
         />
         <InputTextField
           errorMessage={errors?.endTime?.message}
           label="Horário de término da pelada"
-          type="time"
+          type="datetime-local"
           {...register('endTime')}
         />
         <InputNumberField

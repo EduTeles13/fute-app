@@ -9,7 +9,7 @@ import { cookies } from '@/utils';
 
 export const Profile = () => {
   const { data } = useSession();
-  const username = data?.user?.name;
+  const footyId = data?.user?.id;
 
   return (
     <Flex flexDir="column" height="100%" justifyContent="space-between" gap="1rem">
@@ -33,9 +33,9 @@ export const Profile = () => {
       />
       <Navigation
         routes={[
-          { icon: <Home />, route: `/admin/${username}`, section: 'home' },
-          { icon: <BarChart4 />, route: `/admin/${username}/estatisticas`, section: 'home' },
-          { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
+          { icon: <Home />, route: `/admin/${footyId}`, section: 'home' },
+          { icon: <BarChart4 />, route: `/admin/${footyId}/estatisticas`, section: 'home' },
+          { icon: <UserCog />, route: `/admin/${footyId}/profile`, section: 'profile' },
         ]}
       />
     </Flex>

@@ -8,7 +8,8 @@ import { FootyEventList } from './components/FootyEventList';
 
 export const HomeFooty = () => {
   const { data } = useSession();
-  const username = data?.user?.name;
+  const footyId = data?.user?.id;
+  const footyName = data?.user.user.name;
 
   return (
     <Flex flexDir="column" height="100%" justifyContent="space-between">
@@ -17,7 +18,7 @@ export const HomeFooty = () => {
           <GridItem colSpan={1} />
           <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
             <Text fontWeight="bold" fontSize="lg">
-              Pelada da Urna
+              {footyName}
             </Text>
           </GridItem>
           <GridItem />
@@ -26,9 +27,9 @@ export const HomeFooty = () => {
       </Flex>
       <Navigation
         routes={[
-          { icon: <Home />, route: `/admin/${username}`, section: 'home' },
-          { icon: <BarChart4 />, route: `/admin/${username}/estatisticas`, section: 'home' },
-          { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
+          { icon: <Home />, route: `/admin/${footyId}`, section: 'home' },
+          { icon: <BarChart4 />, route: `/admin/${footyId}/estatisticas`, section: 'home' },
+          { icon: <UserCog />, route: `/admin/${footyId}/profile`, section: 'profile' },
         ]}
       />
     </Flex>
