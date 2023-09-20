@@ -18,8 +18,7 @@ import { UseFieldArrayAppend, useController, useForm } from 'react-hook-form';
 
 import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
-
-import { PlayerSelectionFormType } from '../PlayersSelection';
+import { PlayerSetupFormType } from '@/modules/public/Register/PlayersSetup';
 
 import { validator } from './validator';
 
@@ -30,7 +29,7 @@ type AddPlayerFormType = {
 };
 
 type AddPlayerModalProps = {
-  append: UseFieldArrayAppend<PlayerSelectionFormType, 'players'>;
+  append: UseFieldArrayAppend<PlayerSetupFormType, 'players'>;
 };
 
 export const AddPlayerModal = ({ append }: AddPlayerModalProps) => {

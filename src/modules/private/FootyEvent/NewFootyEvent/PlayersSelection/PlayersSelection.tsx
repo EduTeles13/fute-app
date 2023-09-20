@@ -1,67 +1,115 @@
-import {
-  Flex,
-  Grid,
-  GridItem,
-  Switch,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { Flex, Grid, GridItem, Text, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { useEffect, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 
+import { useCreateFootyEvent } from '@/api/FootyEvent/hooks/useCreateFootyEvent';
 import { CButton } from '@/components/CButton';
-import { CModal } from '@/components/Modal/CMolda';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyEventStore } from '@/store/FootyEventStore';
 
-import { AddPlayerModal } from './components/AddPlayerModal';
+import { DailyPlayers } from './components/DailyPlayers';
+import { MonthlyPlayers } from './components/MonthlyPlayers';
+
+type Player = { id?: string; name: string; stars: number; presence: boolean };
 
 export type PlayerSelectionFormType = {
-  players: { name: string; stars: number; isMonthlyPlayer: boolean }[];
+  monthlyPlayers: Player[];
+  dailyPlayers: Player[];
 };
 
-export const PlayersSelection = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const { handleSubmit, control } = useForm<PlayerSelectionFormType>({
+export const PlayerSelection = () => {
+  const { push } = useRouter();
+  const { data } = useSession();
+  const toast = useToast();
+  const footyId = data?.user?.id;
+  const footyPlayers = useMemo(() => {
+    return data?.user?.user?.players ?? [];
+  }, [data]);
+
+  const config = useFootyEventStore((state) => state.config);
+  const { mutate } = useCreateFootyEvent();
+  const { handleSubmit, control, reset } = useForm<PlayerSelectionFormType>({
     mode: 'onChange',
-    defaultValues: {
-      players: [
-        {
-          name: 'Luca',
-          stars: 5,
-          isMonthlyPlayer: true,
-        },
-        {
-          name: 'Gui',
-          stars: 5,
-          isMonthlyPlayer: true,
-        },
-        {
-          name: 'Breno',
-          stars: 5,
-          isMonthlyPlayer: true,
-        },
-      ],
-    },
   });
 
-  const { fields, append } = useFieldArray({ control, name: 'players' });
+  useEffect(() => {
+    const formData = footyPlayers.reduce<{
+      dailyPlayers: Player[];
+      monthlyPlayers: Player[];
+    }>(
+      (acc, cur) => {
+        if (cur.type === 'daily') {
+          acc.dailyPlayers.push({ id: cur.id, name: cur.name, stars: cur.stars, presence: true });
+        }
 
-  const onOpen = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+        if (cur.type === 'monthly') {
+          acc.monthlyPlayers.push({ id: cur.id, name: cur.name, stars: cur.stars, presence: true });
+        }
+
+        return {
+          dailyPlayers: [...acc.dailyPlayers],
+          monthlyPlayers: [...acc.monthlyPlayers],
+        };
+      },
+      {
+        dailyPlayers: [],
+        monthlyPlayers: [],
+      },
+    );
+
+    reset({ ...formData });
+  }, [footyPlayers, reset]);
 
   const submitPlayers = (data: PlayerSelectionFormType) => {
-    onOpen();
-    console.log(data);
+    const daily = data.dailyPlayers.map((player) => ({
+      name: player.name,
+      ...(player.id && { id: player.id }),
+      stars: player.stars,
+      type: 'daily,',
+    }));
+
+    const monthly = data.monthlyPlayers.map((player) => ({
+      name: player.name,
+      ...(player.id && { id: player.id }),
+      stars: player.stars,
+      type: 'monthly,',
+    }));
+
+    const players = [...monthly, ...daily];
+
+    mutate(
+      {
+        body: {
+          footyId: footyId as string,
+          playersPerTeam: config.playersPerTeam,
+          numberOfTeams: config.teamsQty,
+          endHour: new Date(config.endTime).toISOString(),
+          startHour: new Date(config.startTime).toISOString(),
+          players: players,
+        },
+      },
+      {
+        onSuccess: () => {
+          toast({
+            title: 'Pelada criada com sucesso',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+          });
+          push(`/admin/${footyId}`);
+        },
+        onError: () => {
+          toast({
+            title: 'Erro ao criar pelada',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -72,52 +120,18 @@ export const PlayersSelection = () => {
         </GridItem>
         <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
           <Text fontWeight="bold" fontSize="lg">
-            Criação de Evento de Pelada
+            Nova pelada
           </Text>
         </GridItem>
         <GridItem />
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="2rem" px="1rem">
-        <AddPlayerModal append={append} />
-        <TableContainer border="1px" borderColor="gray.300" borderRadius="lg">
-          <Table>
-            <Thead>
-              <Tr>
-                <Th fontSize="sm" textAlign="center" border="none">
-                  NOME
-                </Th>
-                <Th fontSize="sm" textAlign="center" border="none">
-                  ESTRELAS
-                </Th>
-                <Th fontSize="sm" textAlign="center" border="none">
-                  MENSALISTA
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {fields.map((player) => {
-                return (
-                  <Tr key={player.id} className="no-underline-row">
-                    <Td textAlign="center" border="none">
-                      {player.name}
-                    </Td>
-                    <Td textAlign="center" border="none">
-                      {player.stars}
-                    </Td>
-                    <Td textAlign="center" border="none">
-                      <Switch colorScheme="green" isChecked={player.isMonthlyPlayer} />
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-        <CButton label="Finalizar" type="submit" />
+        <MonthlyPlayers control={control} />
+        <DailyPlayers control={control} />
+        <Flex justifyContent="flex-end">
+          <CButton label="Finalizar" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
+        </Flex>
       </Flex>
-      <CModal isOpen={open} onClose={onClose}>
-        Modal
-      </CModal>
     </Flex>
   );
 };

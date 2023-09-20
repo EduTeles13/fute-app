@@ -12,7 +12,7 @@ export const Landing = () => {
   };
 
   const handleButtonClick2 = () => {
-    router.push('/pesquisar');
+    router.push('/futes');
   };
 
   return (

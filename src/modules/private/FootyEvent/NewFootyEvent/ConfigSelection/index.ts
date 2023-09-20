@@ -1,1 +1,1 @@
-export * from './NewFootyEvent';
+export * from './ConfigSelection';

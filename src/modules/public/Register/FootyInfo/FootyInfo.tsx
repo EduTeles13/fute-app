@@ -8,10 +8,13 @@ import { CButton } from '@/components/CButton';
 import { InputNumberField } from '@/components/InputNumberField';
 import { InputTextField } from '@/components/InputTextField';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyStore } from '@/store/FootyStore';
 
 import { validator } from './validator';
 
 type RegisterFormType = {
+  name: string;
+  location: string;
   startTime: string;
   endTime: string;
   playersPerTeam: number;
@@ -19,6 +22,7 @@ type RegisterFormType = {
 };
 
 export const FootyInfo = () => {
+  const setFootyInfo = useFootyStore((state) => state.setFootyInfo);
   const {
     register,
     handleSubmit,
@@ -31,8 +35,8 @@ export const FootyInfo = () => {
   const router = useRouter();
 
   const submitRegister = (data: RegisterFormType) => {
+    setFootyInfo(data);
     router.push('/cadastrar/selecao-jogadores');
-    console.log(data);
   };
 
   return (
@@ -50,15 +54,25 @@ export const FootyInfo = () => {
       </Grid>
       <Flex flexDir="column" justifyContent="space-between" gap="1rem" px="1rem">
         <InputTextField
+          errorMessage={errors?.name?.message}
+          label="Nome da pelada"
+          {...register('name')}
+        />
+        <InputTextField
+          errorMessage={errors?.location?.message}
+          label="Localização da pelada"
+          {...register('location')}
+        />
+        <InputTextField
           errorMessage={errors?.startTime?.message}
-          type="time"
+          type="datetime-local"
           label="Horário de início da pelada"
           {...register('startTime')}
         />
         <InputTextField
           errorMessage={errors?.endTime?.message}
           label="Horário de término da pelada"
-          type="time"
+          type="datetime-local"
           {...register('endTime')}
         />
         <InputNumberField

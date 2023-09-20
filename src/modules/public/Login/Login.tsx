@@ -1,5 +1,6 @@
 import { Flex, Grid, GridItem, useToast, Text } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Home, LogIn } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { getSession, signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
@@ -7,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { CButton } from '@/components/CButton';
 import { ClickableText } from '@/components/ClickableText/ClickableText';
 import { InputTextField } from '@/components/InputTextField';
+import { Navigation } from '@/components/Navigation';
 import { ReturnButton } from '@/components/ReturnButton';
 import { cookies } from '@/utils';
 
@@ -39,8 +41,8 @@ export const Login = () => {
     if (result?.status == 200) {
       const session: any = await getSession();
       cookies.setAccess(session?.user.access_token);
-      const footyUsername = session.user?.name;
-      await push(`/admin/${footyUsername}`);
+      const footyId = session.user?.user?.id;
+      await push(`/admin/${footyId}`);
     } else {
       toast({
         title: 'Usuário ou senha incorreta.',
@@ -90,6 +92,12 @@ export const Login = () => {
         <CButton type="submit" label="Entrar" borderRadius="md" width="5rem" alignSelf="flex-end" />
       </Flex>
       <ClickableText text="Ainda não está cadastrado? Cadastre-se aqui" href="/cadastrar" />
+      <Navigation
+        routes={[
+          { icon: <Home />, route: `/`, section: 'home' },
+          { icon: <LogIn />, route: `/entrar`, section: 'login' },
+        ]}
+      />
     </Flex>
   );
 };

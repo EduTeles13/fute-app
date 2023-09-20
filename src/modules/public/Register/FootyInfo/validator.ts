@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 
 export const validator = yup.object().shape({
+  name: yup.string().required('NOme da pelada é obrigatório'),
+  location: yup.string().required('Localização é obrigatório'),
   startTime: yup.string().required('Horário de início obrigatório'),
   endTime: yup
     .string()
@@ -9,14 +11,12 @@ export const validator = yup.object().shape({
       'is-greater',
       'O horário de término deve ser maior que o horário de início',
       function (endTime) {
-        const { startTime } = this.parent; // Obtenha o valor do campo "startTime" do objeto sendo validado
+        const { startTime } = this.parent;
         if (!startTime || !endTime) {
-          // Se algum dos campos não estiver preenchido, não faça a validação
           return true;
         }
-        // Converta as strings de horário em objetos Date para comparar
-        const startTimeDate = new Date(`1970-01-01T${startTime}`);
-        const endTimeDate = new Date(`1970-01-01T${endTime}`);
+        const startTimeDate = new Date(startTime);
+        const endTimeDate = new Date(endTime);
         return startTimeDate < endTimeDate;
       },
     ),

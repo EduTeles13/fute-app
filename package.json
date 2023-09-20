@@ -19,6 +19,7 @@
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "axios": "^1.4.0",
+    "dayjs": "^1.11.10",
     "eslint-plugin-testing-library": "^5.11.0",
     "framer-motion": "^10.12.18",
     "lucide-react": "^0.276.0",
@@ -28,7 +29,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.1",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.1.0",

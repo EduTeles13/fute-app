@@ -1,12 +1,11 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
-import { Home, UserCog } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
+import { useGetFootyEvent } from '@/api/FootyEvent/hooks/useGetFootyEvent';
 import { CButton } from '@/components/CButton';
 import { InputTextField } from '@/components/InputTextField';
-import { Navigation } from '@/components/Navigation';
 import { ReturnButton } from '@/components/ReturnButton';
 
 import { PlayersTable } from './PlayersTable';
@@ -20,46 +19,38 @@ export type FootyEventFormType = {
 };
 
 export const FootyEvent = () => {
-  const { data } = useSession();
-  const username = data?.user?.name;
-  const { control, register, handleSubmit } = useForm<FootyEventFormType>({
+  const { query } = useRouter();
+  const id = query['footy-event'];
+  const { data } = useGetFootyEvent({ id: id as string });
+
+  const { control, register, handleSubmit, reset } = useForm<FootyEventFormType>({
     mode: 'onChange',
     reValidateMode: 'onSubmit',
-    defaultValues: {
-      teams: [
-        {
-          teamName: 'Time1',
-          victoriesQty: 2,
-          players: [
-            { name: 'luca', goals: 5, assists: 3 },
-            { name: 'breno', goals: 5, assists: 3 },
-            { name: 'guilherMe', goals: 5, assists: 3 },
-            { name: 'eduardo', goals: 5, assists: 3 },
-            { name: 'josef', goals: 5, assists: 3 },
-          ],
-        },
-        {
-          teamName: 'Time2',
-          victoriesQty: 0,
-          players: [
-            { name: 'rob', goals: 5, assists: 3 },
-            { name: 'son', goals: 5, assists: 3 },
-            { name: 'fidalgo', goals: 5, assists: 3 },
-            { name: 'sqlJunior', goals: 5, assists: 3 },
-            { name: 'joinshua', goals: 5, assists: 3 },
-          ],
-        },
-      ],
-    },
   });
+
   const { fields: teamsFields } = useFieldArray({ name: 'teams', control });
+
+  useEffect(() => {
+    reset({
+      teams: data?.data?.teams.map((team) => ({
+        teamName: team.name,
+        victoriesQty: team.victories,
+        players: team.players.map((player) => ({
+          name: player.name,
+          goals: player.goals,
+          assists: player.assists,
+        })),
+      })),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const handleFinishEvent = (data: FootyEventFormType) => {
     console.log(data);
   };
 
   return (
-    <Flex flexDir="column" height="calc(100vh - 2rem)" justifyContent="space-between">
+    <Flex flexDir="column" height="100%" justifyContent="space-between">
       <Flex flexDir="column" mt="2rem" gap="1rem">
         <Grid templateColumns="repeat(4, 1fr)">
           <GridItem colSpan={1}>
@@ -67,7 +58,7 @@ export const FootyEvent = () => {
           </GridItem>
           <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
             <Text fontWeight="bold" fontSize="lg">
-              Pelada da Urna
+              {data?.data.footy.name}
             </Text>
           </GridItem>
           <GridItem />
@@ -100,15 +91,11 @@ export const FootyEvent = () => {
             </Flex>
           ))}
 
-          <CButton label="Finalizar" type="submit" />
+          <Flex justifyContent="flex-end">
+            <CButton label="Finalizar" borderRadius="md" height="2.1rem" w="5.5rem" type="submit" />
+          </Flex>
         </Flex>
       </Flex>
-      <Navigation
-        routes={[
-          { icon: <Home />, route: `/admin/${username}`, section: 'home' },
-          { icon: <UserCog />, route: `/admin/${username}/profile`, section: 'profile' },
-        ]}
-      />
     </Flex>
   );
 };

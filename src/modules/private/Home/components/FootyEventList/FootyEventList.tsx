@@ -1,61 +1,62 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
 import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import React from 'react';
 
-const footyEvents = [
-  {
-    id: '1',
-    createdAt: '22/08/2023',
-    status: 'Ativa',
-  },
-  {
-    id: '2',
-    createdAt: '29/08/2023',
-    status: 'Encerrada',
-  },
-  {
-    id: '3',
-    createdAt: '06/09/2023',
-    status: 'Encerrada',
-  },
-];
+import { useGetAllFootyEvents } from '@/api/FootyEvent/hooks/useGetAllFootyEvents';
 
 export const FootyEventList = () => {
-  const { query, push } = useRouter();
-  const { data } = useSession();
-  const username = data?.user?.name;
+  const { push } = useRouter();
+  const { query } = useRouter();
+
+  const { footy: footyId } = query;
+
+  const { data: events, isLoading } = useGetAllFootyEvents({
+    footyId: footyId as string,
+    queryConfig: { enabled: !!footyId && footyId != '' },
+  });
+
   return (
-    <Flex flexDir="column" alignItems="center" justifyContent="flex-start" gap="3rem">
+    <Flex
+      flexDir="column"
+      alignItems="center"
+      justifyContent="flex-start"
+      overflowY="auto"
+      gap="3rem"
+    >
       <Flex justifyContent="center" alignItems="center">
-        <Link href={`/admin/${username}/criacao`}>
+        <Link href={`/admin/${footyId}/criacao`}>
           <PlusCircle size={30} />
         </Link>
       </Flex>
-      <Flex flexDir="column" gap="1rem" w="100%">
-        {footyEvents.map((event) => {
-          return (
-            <Flex
-              key={event.id}
-              bgGradient="linear-gradient(90deg, rgba(29,214,80,1) 39%, rgba(255,255,255,1) 100%)"
-              p="0.5rem"
-              px="1rem"
-              borderRadius="md"
-              boxShadow="md"
-              gap="0.5rem"
-              onClick={() => push(`/admin/${query.footy}/${event.id}`)}
-            >
-              <Text color="black" fontWeight="semibold" mb="1.5rem">
-                {event.createdAt}
-              </Text>
-              <Text color="black" fontWeight="semibold" mb="1.5rem">
-                {event.status}
-              </Text>
-            </Flex>
-          );
-        })}
+      <Flex flexDir="column" gap="1rem" w="100%" overflowY="auto">
+        {isLoading ? (
+          <Center>
+            <Spinner color="primary.100" />
+          </Center>
+        ) : (
+          events?.data.map((event) => {
+            return (
+              <Flex
+                flexDir="column"
+                key={event.id}
+                bgGradient="linear-gradient(90deg, rgba(29,214,80,1) 39%, rgba(255,255,255,1) 100%)"
+                py="0.75rem"
+                px="1rem"
+                borderRadius="md"
+                boxShadow="md"
+                onClick={() => push(`/admin/${footyId}/${event.id}`)}
+              >
+                <Text color="black" fontWeight="semibold">
+                  {new Date(event.created_at).toUTCString()}
+                </Text>
+                <Text color="black" fontWeight="semibold">
+                  {event.footy.location}
+                </Text>
+              </Flex>
+            );
+          })
+        )}
       </Flex>
     </Flex>
   );

@@ -1,14 +1,16 @@
 import { Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { CButton } from '@/components/CButton';
 import { InputNumberField } from '@/components/InputNumberField';
 import { InputTextField } from '@/components/InputTextField';
 import { ReturnButton } from '@/components/ReturnButton';
+import { useFootyEventStore } from '@/store/FootyEventStore';
 
 import { validator } from './validator';
 
@@ -19,22 +21,38 @@ type RegisterFormType = {
   teamsQty: number;
 };
 
-export const NewFootyEvent = () => {
+export const ConfigSelection = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<RegisterFormType>({
     mode: 'onChange',
     resolver: yupResolver(validator),
   });
   const { data } = useSession();
-  const username = data?.user?.name;
+  const footyId = data?.user?.id;
   const router = useRouter();
+  const { data: sessionData } = useSession();
+  const setConfig = useFootyEventStore((state) => state.setConfig);
+
+  useEffect(() => {
+    reset({
+      startTime: new Date(sessionData?.user?.user?.start_hour as string).toISOString().slice(0, 16),
+      endTime: new Date(sessionData?.user?.user?.end_hour as string).toISOString().slice(0, 16),
+      playersPerTeam: sessionData?.user?.user?.players_per_team ?? 0,
+      teamsQty: sessionData?.user?.user?.num_of_teams ?? 0,
+    });
+  }, [sessionData, reset]);
 
   const submitRegister = (data: RegisterFormType) => {
-    router.push(`/admin/${username}/criacao/selecao-de-jogadores`);
-    console.log(data);
+    router.push(`/admin/${footyId}/criacao/selecao-de-jogadores`);
+    setConfig({
+      ...data,
+      endTime: dayjs(data.endTime).toISOString(),
+      startTime: dayjs(data.startTime).toISOString(),
+    });
   };
 
   return (
@@ -45,7 +63,7 @@ export const NewFootyEvent = () => {
         </GridItem>
         <GridItem colSpan={2} display="flex" alignItems="center" justifyContent="center">
           <Text fontWeight="bold" fontSize="lg">
-            Criação de Evento de Pelada
+            Nova pelada
           </Text>
         </GridItem>
         <GridItem />
@@ -53,15 +71,19 @@ export const NewFootyEvent = () => {
       <Flex flexDir="column" justifyContent="space-between" gap="1rem" px="1rem">
         <InputTextField
           errorMessage={errors?.startTime?.message}
-          type="time"
+          type="datetime-local"
           label="Horário de início da pelada"
-          {...register('startTime')}
+          {...register('startTime', {
+            valueAsDate: true,
+          })}
         />
         <InputTextField
           errorMessage={errors?.endTime?.message}
           label="Horário de término da pelada"
-          type="time"
-          {...register('endTime')}
+          type="datetime-local"
+          {...register('endTime', {
+            valueAsDate: true,
+          })}
         />
         <InputNumberField
           errorMessage={errors?.playersPerTeam?.message}
