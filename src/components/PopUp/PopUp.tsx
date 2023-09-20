@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import { CButton } from '../CButton';
+import { CButton } from '@/components/CButton';
 
 export const PopUp = ({ header, content, button }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
