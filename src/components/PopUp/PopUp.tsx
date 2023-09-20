@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import { LoginButton } from '../LoginButton';
+import { CButton } from '@/components/CButton';
 
 export const PopUp = ({ header, content, button }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,9 +23,9 @@ export const PopUp = ({ header, content, button }) => {
           <ModalHeader fontWeight="bold">{header}</ModalHeader>
           <ModalBody>{content}</ModalBody>
           <ModalFooter>
-            <LoginButton label="Prosseguir" borderRadius="md" colorScheme="blue" onClick={onClose}>
+            <CButton label="Prosseguir" borderRadius="md" colorScheme="blue" onClick={onClose}>
               {button}
-            </LoginButton>
+            </CButton>
           </ModalFooter>
         </ModalContent>
       </Modal>
